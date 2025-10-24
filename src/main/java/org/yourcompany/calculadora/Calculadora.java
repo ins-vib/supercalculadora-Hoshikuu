@@ -2,6 +2,8 @@
 
 package org.yourcompany.calculadora;
 
+import java.util.Random;
+
 /**
  *
  * @author Posa el teu nom
@@ -38,8 +40,17 @@ public class Calculadora {
         // System.out.println("5 elevat a la potència 4: " + calcularPotencia(5, 4));
         // System.out.println("3 elevat a la potència 5: " + calcularPotencia(3, 5));
 
-       
-        
+        int rep1 = numeroCares(10000);
+        int rep2 = numeroCares(10000);
+        int rep3 = numeroCares(10000);
+
+        System.out.println("Rep1: " + rep1 + "\nRep2: " + rep2 + "\nRep3: " + rep3);
+
+        double preu1 = preuCinema(8, true, false);
+        double preu2 = preuCinema(5, false, false);
+        double preu3 = preuCinema(6, true, true);
+
+        System.out.println("P1: " + preu1 + "\nP2: " + preu2 + "\nP3: " + preu3);
     }
 
     /**
@@ -62,5 +73,40 @@ public class Calculadora {
         return comptador;
     }
 
+    public static int numeroCares(int rep) {
+        Random random = new Random();
+        
+        int cara = 0;
+        int cruz = 0;
+        
+        for (int i = 0; i < rep; i++) {
+            int lanzamiento = random.nextInt(0, 2);
+            
+            if (lanzamiento == 0) {
+                cara++;
+            }
+            else {
+                cruz++;
+            }
+        }
+        
+        System.out.println("Cara: " + cara);
+        System.out.println("Cruz: " + cruz);
 
+        return cara;
+    }
+
+    public static double preuCinema(double preuBase, boolean esCapDeSetmana, boolean teCarnetJove) {
+        double preu = preuBase;
+        
+        if(esCapDeSetmana) {
+            preu = preu * 1.1;
+        }
+        
+        if(teCarnetJove) {
+            preu = preu * 0.85;
+        }
+        
+        return preu;
+    }
 }
