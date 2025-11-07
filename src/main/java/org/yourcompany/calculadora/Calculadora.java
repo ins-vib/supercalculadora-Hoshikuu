@@ -1,44 +1,79 @@
 package org.yourcompany.calculadora;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class Calculadora {
     public static void main(String[] args) {
-        // Exemples de crida per al mètode sumaPrimersNumeros
-        System.out.println("Suma dels primers 5 números: " + sumaPrimersNumeros(5));
-        System.out.println("Suma dels primers 10 números: " + sumaPrimersNumeros(10));
-        System.out.println("Suma dels primers 15 números: " + sumaPrimersNumeros(15));
+        mostrarMenuConsola();
+    }
 
-        // Exemples de crida per al mètode calcularFactorial
-        System.out.println("Factorial de 5: " + calcularFactorial(5));
-        System.out.println("Factorial de 7: " + calcularFactorial(7));
-        System.out.println("Factorial de 10: " + calcularFactorial(10));
-
-        // Exemples de crida per al mètode sumaQuadrats
-        System.out.println("Suma dels quadrats dels primers 3 números: " + sumaQuadrats(3));
-        System.out.println("Suma dels quadrats dels primers 5 números: " + sumaQuadrats(5));
-        System.out.println("Suma dels quadrats dels primers 7 números: " + sumaQuadrats(7));
-
-        // Exemples de crida per al mètode calcularPotencia
-        System.out.println("2 elevat a la potència 3: " + calcularPotencia(2, 3));
-        System.out.println("5 elevat a la potència 4: " + calcularPotencia(5, 4));
-        System.out.println("3 elevat a la potència 5: " + calcularPotencia(3, 5));
-
-        // Exemples de crida per al mètode nombreDigits
-        System.out.println("Nombre de dígits de 1234: " + nombreDigits(1234));
-        System.out.println("Nombre de dígits de 56789: " + nombreDigits(56789));
-        System.out.println("Nombre de dígits de -101010: " + nombreDigits(-101010));
-        System.out.println("Nombre de dígits de 0: " + nombreDigits(0));
-
-        // Exemples de tirar monedes amb el mètode numeroCares
-        System.out.println("Nombre de cares en 10 tirades: " + numeroCares(10));
-        System.out.println("Nombre de cares en 100 tirades: " + numeroCares(100));
-        System.out.println("Nombre de cares en 1000 tirades: " + numeroCares(1000));
-
-        // Exemples de preus de cinema amb el mètode preuCinema
-        System.out.println("Preu del cinema si 8€ de base, es cap de setmana i no te carnet jove: " + preuCinema(8, true, false));
-        System.out.println("Preu del cinema si 5€ de base, es cap de setmana i te carnet jove: " + preuCinema(5, true, true));
-        System.out.println("Preu del cinema si 7€ de base, no es cap de setmana i te carnet jove: " + preuCinema(7, false, true));
+    public static void mostrarMenuConsola() {
+        try (Scanner teclat = new Scanner(System.in)) {
+            int opcio;
+            do {
+                System.out.println("---- Supercalculadora ----");
+                System.out.println("1. Sumar els primers numeros");
+                System.out.println("2. Calcular factorials");
+                System.out.println("3. Suma quadrats");
+                System.out.println("4. Calcular potencia");
+                System.out.println("5. Nombre de digits");
+                System.out.println("6. Nombre de cares");
+                System.out.println("7. Preu del cinema");
+                System.out.println("8. Sortir");
+                
+                System.out.print("Entra la opció: ");
+                opcio = teclat.nextInt();
+                int num;
+                
+                switch (opcio) {
+                    case 1 -> {
+                        System.out.print("Entra el numero: ");
+                        num = teclat.nextInt();
+                        System.out.println("Suma dels primers" + num + "números: " + sumaPrimersNumeros(num));
+                    }
+                    case 2 -> {
+                        System.out.print("Entra el numero: ");
+                        num = teclat.nextInt();
+                        System.out.println("Factorial de " + num + ": " + calcularFactorial(num));
+                    }
+                    case 3 -> {
+                        System.out.print("Entra el numero: ");
+                        num = teclat.nextInt();
+                        System.out.println("Suma dels quadrats dels primers " + num + " números: " + sumaQuadrats(num));
+                    }
+                    case 4 -> {
+                        System.out.print("Entra la base: ");
+                        num = teclat.nextInt();
+                        System.out.print("Entra el exponent");
+                        int exponent = teclat.nextInt();
+                        System.out.println(num + " elevat a la potència " + exponent + ": " + calcularPotencia(num, exponent));
+                    }
+                    case 5 -> {
+                        System.out.print("Entra el numero: ");
+                        num = teclat.nextInt();
+                        System.out.println("Nombre de dígits de " + num + ": " + nombreDigits(num));
+                    }
+                    case 6 -> {
+                        System.out.print("Entra el numero: ");
+                        num = teclat.nextInt();
+                        System.out.println("Nombre de cares en " + num + " tirades: " + numeroCares(num));
+                    }
+                    case 7 -> {
+                        System.out.print("Entra el numero: ");
+                        num = teclat.nextInt();
+                        System.out.print("Es cap de setmana? (S/N): ");
+                        boolean b_cap = Character.toUpperCase(teclat.next().charAt(0)) == 'S';
+                        System.out.print("Te carnet jove? (S/N): ");
+                        boolean b_carnet = Character.toUpperCase(teclat.next().charAt(0)) == 'S';
+                        System.out.println("El preu del cinema es: " + preuCinema(num, b_cap, b_carnet));
+                    }
+                    case 8 -> {
+                    }
+                    default -> System.out.println("Opció no encontrada");
+                }
+            } while (opcio != 8);
+        }
     }
 
     public static int sumaPrimersNumeros(int num) {
@@ -82,14 +117,17 @@ public class Calculadora {
     }
 
     public static int nombreDigits(int nombre) {
+        int comptador = 0;
+        
         if (nombre == 0) {
             return 1;
-        }        
-        int comptador = 0;
+        }
+
         while (nombre != 0) {
             nombre /= 10;
             comptador++;
         }
+
         return comptador;
     }
 
